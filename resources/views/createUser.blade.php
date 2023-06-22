@@ -30,13 +30,16 @@
             <div class="form-group">
                 <label>Password: <span class="text-danger">*</span></label>
                 <div class="position-relative">
-                    <input type="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid shake-animation' : '' }}" placeholder="Example: StrongPassword!">
+                    <input type="password" id="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid shake-animation' : '' }}" placeholder="Example: StrongPassword!">
                     @if ($errors->has('password'))
                         <span class="text-danger">{{ $errors->first('password') }}</span>
                         <i class="error-icon fas fa-times-circle"></i>
+                    @else
+                        <small class="form-text text-muted">We recommend using a password manager to generate and store a strong, unique password.</small>
                     @endif
                 </div>
             </div>
+
 
             <div class="form-group">
                 <label>Email: <span class="text-danger">*</span></label>
@@ -60,12 +63,12 @@
             color: red;
         }
 
-        div.container {
-            margin: 0 auto;
-            width: 300px;
-            border: 1px solid #ccc;
-            padding: 20px;
-        }
+        /*div.container {*/
+        /*    margin: 0 auto;*/
+        /*    width: 300px;*/
+        /*    border: 1px solid #ccc;*/
+        /*    padding: 20px;*/
+        /*}*/
 
         .box {
             border-width: 1px;

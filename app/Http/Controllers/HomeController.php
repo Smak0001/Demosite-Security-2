@@ -18,19 +18,22 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Store a newly created user in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'password' => 'required|min:8',
+            'password' => 'required|min:10|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
             'email' => 'required|email|unique:users'
         ], [
             'name.required' => 'Name is required',
-            'password.required' => 'Password is required'
+            'password.required' => 'Password is required',
+            'password.min' => 'The password must be at least :min characters long.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.'
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
