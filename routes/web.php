@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TooManyController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +45,5 @@ Route::get('/500', function () {
 })->name('error.500');
 
 Route::get('user/create', [ HomeController::class, 'create' ])->name('usercreate');;
+Route::get('toomany', [ TooManyController::class, 'index' ])->name('toomany');;
 Route::post('user/create', [ HomeController::class, 'store' ]);
