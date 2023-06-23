@@ -74,9 +74,15 @@ class ForgotPasswordController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:10|confirmed|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
             'password_confirmation' => 'required'
+        ],[
+        'name.required' => 'Name is required',
+            'password.required' => 'Password is required',
+            'password.min' => 'The password must be at least :min characters long.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.'
         ]);
+
 
         $updatePassword = DB::table('password_reset_tokens')
             ->where([
