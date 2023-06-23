@@ -1,6 +1,11 @@
 @extends('layout')
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <main class="login-form">
         <div class="cotainer">
             <div class="row justify-content-center">

@@ -43,5 +43,5 @@ Route::get('/500', function () {
     return view('500');
 })->name('error.500');
 
-Route::get('user/create', [ HomeController::class, 'create' ]);
+Route::get('user/create', [ HomeController::class, 'create' ])->name('usercreate');;
 Route::post('user/create', [ HomeController::class, 'store' ]);

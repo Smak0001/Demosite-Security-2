@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -38,7 +39,8 @@ class HomeController extends Controller
 
         $validatedData['password'] = bcrypt($validatedData['password']);
         $user = User::create($validatedData);
+        Auth::login($user);
 
-        return back()->with('success', 'User created successfully.');
+        return redirect("products")->withSuccess('Great! You have successfully registered and logged in');
     }
 }

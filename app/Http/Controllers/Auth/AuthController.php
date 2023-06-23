@@ -11,6 +11,9 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    protected $maxAttempts = 3; /* Default is 5 */
+    protected $decayMinutes = 2; /* Default is 1 */
+
     /**
      * Show the login form.
      *
@@ -54,7 +57,7 @@ class AuthController extends Controller
             return redirect()->intended('products')->withSuccess('You have successfully logged in');
         }
 
-        return redirect("/")->withSuccess('Invalid credentials');
+        return redirect("login")->withSuccess('Invalid credentials');
     }
 
     /**
