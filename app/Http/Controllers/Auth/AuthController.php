@@ -5,15 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
 {
-    protected $maxAttempts = 3; /* Default is 5 */
-    protected $decayMinutes = 2; /* Default is 1 */
-
     /**
      * Show the login form.
      *
@@ -50,12 +48,22 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
 
+        $key = 'send-message:'.$request->input('email');
+
+        if (RateLimiter::tooManyAttempts($key, $perMinute = 5)) {
+            return 'Too many attempts!';
+        }
+
         if (Auth::attempt($credentials, $remember)) {
             // Store the login status in the session
             $request->session()->put('login_status', 'logged_in');
 
+            RateLimiter::hit($key);
+
             return redirect()->intended('products')->withSuccess('You have successfully logged in');
         }
+
+        RateLimiter::hit($key);
 
         return redirect("login")->withSuccess('Invalid credentials');
     }
