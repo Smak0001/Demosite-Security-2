@@ -49,9 +49,9 @@ class AuthController extends Controller
         $remember = $request->has('remember');
 
         $key = 'send-message:'.$request->input('email');
-        $decayRate = 10; // Time user can't login
+        $decayRate = 2; // Time user can't login (changed to 120 minutes)
 
-        if (RateLimiter::tooManyAttempts($key, $perMinute = 5, $lockoutFor = $decayRate)) {
+        if (RateLimiter::tooManyAttempts($key, $perMinute = 10, $lockoutFor = $decayRate)) {
             return redirect("toomany");
         }
 
